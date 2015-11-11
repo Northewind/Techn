@@ -1,16 +1,23 @@
 function sincyc()
-        source sincyc.m;
-        i = 0;
-        names{++i} = "cyc83()";
-        names{++i} = "cyc840()";
-        printf("Functions in file sincyc.m:\n");
-        for k = 1 : i
-                printf("\t%s\n", names{k});
-        end
+	srcf = "sincyc.m";
+	source(srcf);
+	i = 0;
+	names{++i} = "cyc83()";
+	names{++i} = "cyc840()";
+	printf("Functions in file %s:\n", srcf);
+	for k = 1 : i
+		printf("\t%s\n", names{k});
+	end
 end
 
 
 function cyc83()
+	## Sinumerik CYCLE83 cycle - interactive CNC-block generation
+	##   for deep drilling
+	##
+	## Usage:
+	##   cyc83()
+	##
 	rtp = input("Safety level: ");
 	rfp = input("Hole start level: ");
 	sdis = input("Safety dis from start level (w/o sign): ");
@@ -49,22 +56,13 @@ function cyc83()
 end
 
 
-
-function s = pit_str(mpit)
-	global thread;
-	bigpit = 0;
-	if (exist("thread", "var"))
-		if (isfield(thread.metric.pitch, num2str(mpit)))
-			bigpit = getfield(thread.metric.pitch,
-					num2str(mpit));
-		endif
-	endif
-	s = ["Thread pitch (",  num2str(bigpit),  "): "];
-endfunction
-
-
-
 function cyc840()
+	## Sinumerik CYCLE840 cycle - interactive CNC-block generation
+	##   for tapping
+	##
+	## Usage:
+	##   cyc840()
+	##
 	rtp = input("Safety level: ");
 	rfp = input("Hole start level: ");
 	sdis = input("Safety dis from start level (w/o sign): ");
@@ -84,7 +82,7 @@ function cyc840()
 	sdac = uint32(3);
 	enc = uint32(1);
 	mpit = input("Thread diameter: ");
-	pit = input(pit_str(mpit));
+	pit = input(["Thread pitch (", num2str(max(mpitch(mpit))), "): "]);
 	printf("CYCLE840(%g,%g,%g,%g,%g,%g,%d,%d,%d,%g,%g)\n",
 		rtp, rfp, sdis, dp, dpr, dtb,
 		sdr, sdac, enc, mpit, pit);

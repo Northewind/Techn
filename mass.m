@@ -1,9 +1,10 @@
 function mass()
-	source mass.m;
+	srcf = "mass.m";
+	source(srcf);
 	i = 0;
 	names{++i} = "cyl(L, varargin)";
 	names{++i} = "box(L,W,H)";
-	printf("Functions in file mass.m:\n");
+	printf("Functions in file %s:\n", srcf);
 	for k = 1 : i
 		printf("\t%s\n", names{k});
 	end

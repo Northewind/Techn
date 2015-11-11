@@ -1,10 +1,11 @@
 function sizes()
-	source sizes.m;
+	srcf = "sizes.m";
+	source(srcf);
 	i = 0;
 	names{++i} = "dev2lim(varargin)";
 	names{++i} = "splus(varargin)";
 	names{++i} = "tol(s)";
-	printf("Functions in file sizes.m:\n");
+	printf("Functions in file %s:\n", srcf);
 	for k = 1 : i
 		printf("\t%s\n", names{k});
 	end

@@ -1,63 +1,70 @@
 function facets()
-	source facets.m;
+	srcf = "facets.m";
+	source(srcf);
 	i = 0;
-	names{++i} = "facetProc(Z0, f, m)";
+	names{++i} = "facetProc(f, m)";
 	names{++i} = "createFacet(L, angle)";
 	names{++i} = "createMill(D0, D1, angle)";
-	printf("Functions in file facets.m:\n");
+	printf("Functions in file %s:\n", srcf);
 	for k = 1 : i
 		printf("\t%s\n", names{k});
 	end
 end
 
 
-% Расчёт начальной Z1 и конечной Z2 коориданты фасочной фрезы,
-% а также смещения d центра фрезы от стенки
-%   Z0 - базовый уровень
-%   f - фаска, созданная функцией createFacet
-%   m - фреза, созданная функцией createMill
-%   Zmin - минимальное предельное значение по Z,
-%     ниже которого опускаться нельзя
-function [Z1, Z2, d] = facetProc(Z0, f, m, Zmin=NA)
+function [Z, d] = facetProc(f, m, Zmin=NA)
+	## Расчёт смещения по Z фасочной фрезы от верхней плоскости,
+	##   а также смещения d центра фрезы от стенки
+	##
+	## Использование:
+	##   facetProc(f,m[,Zmin])
+	##
+	## Параметры:
+	##   f - фаска, созданная createFacet()
+	##   m - фреза, созданная createMill()
+	##   Zmin - минимальное предельное значение по Z,
+	##     ниже которого опускаться нельзя
+	##
 	if ((f.L > m.L) || (f.ang ~= m.ang))
 		error("facetProc: mill is not applicable");
 	end
-	Z2 = Z0 - f.L/2 - m.L/2;
-	Z1 = Z2 + f.L;
+	Z = - f.L/2 - m.L/2;
 	d = -f.B/2 + mean(m.D)/2;
-	% Проверка по Zmin
-	if (~isna(Zmin) && (Z2 < Zmin))
-		dz = Zmin - Z2;
-		k = tand(f.ang);
-		d -= k*dz;
+	# Проверка по Zmin
+	if (~isna(Zmin) && (Z < Zmin))
+		dz = Zmin - Z;
+		d -= tand(f.ang)*dz;
 		if (d < 0)
 			error("facetProc: wrong geometry")
 		end
-		Z1 += dz;
-		Z2 += dz;
+		Z += dz;
 	end
-	Z1
-	Z2
-	d
+	printf("Plane offset: %g,  wall offset: %g\n", Z, d);
 end
 
 
-% Создание структуры, описывающей фрезу
-%   L - длина фаски (в проекции на ось Z)
-%   angle - угол между фаской и осью Z (град.)
 function f = createFacet(L, angle)
+	## Создание структуры, описывающей фрезу
+	##
+	## Параметры:
+	##   L - длина фаски (в проекции на ось Z)
+	##   angle - угол между фаской и осью Z (град.)
+	##
 	f.L = L;
 	f.ang = angle;
-	% Длина фаски (проекция на перпендикуляр к оси Z):
+	# Длина фаски (проекция на перпендикуляр к оси Z):
 	f.B = L*tand(angle);
 end
 
 
-% Создание структуры, описывающей фрезу
-%   D0 - диаметр внутренний
-%   D1 - наружный диаметр
-%   angle - угол между кромкой и осью Z (град.)
 function m = createMill(D0, D1, angle)
+	## Создание структуры, описывающей фрезу
+	##
+	## Параметры:
+	##   D0 - диаметр внутренний
+	##   D1 - наружный диаметр
+	##   angle - угол между кромкой и осью Z (град.)
+	##
 	D = abs([D0, D1]);
 	m.D = [min(D),  max(D)];
 	m.ang = angle;

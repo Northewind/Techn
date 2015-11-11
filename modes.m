@@ -1,5 +1,6 @@
 function modes()
-	source modes.m;
+	srcf = "modes.m";
+	source(srcf);
 	i = 0;
 	names{++i} = "Scut(Ra, r, Smax=NA)";
 	names{++i} = "ScutDrill(D, Smax=NA)";
@@ -16,7 +17,7 @@ function modes()
 	names{++i} = "tdiams(D, t)";
 	names{++i} = "idiams(D, i)";
 	names{++i} = "tmax(insertType, insertLength)";
-	printf("Functions in file modes.m:\n");
+	printf("Functions in file %s:\n", srcf);
 	for k = 1 : i
 		printf("\t%s\n", names{k});
 	end
