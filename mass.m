@@ -12,18 +12,12 @@ end
 
 
 function m = mcyl(L, varargin)
-	##
 	## Calculate mass of steel cylinder
 	##
 	## Usage:
-	##     mcyl(L, Dd)
-	##
-	## Argumets:
-	##     L - cylinder height
-	##     Dd - number (outer diameter) or 2-vector of numbers
-	##         (outer and inner diameters)
-	##
-	ro = 7.85e-6;		% Í„/ÏÏ3
+	##     mcyl(L, D)
+	##     mcyl(L, [D d])
+	ro = 7.85e-6;		# kg/mm3
 	if (nargin == 2 && isscalar(varargin{1}))
 		D1 = varargin{1};
 		D2 = 0;
@@ -42,9 +36,7 @@ function m = mcyl(L, varargin)
 end
 
 function m = mbox(L,W,H)
-	##
 	## Calculate mass of steel box LxWxH
-	##
-	ro = 7.85e-6;  % kg/mm3
+	ro = 7.85e-6;  # kg/mm3
 	m = L * W * H * ro;
 end

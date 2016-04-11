@@ -1,5 +1,5 @@
-function sincyc()
-	srcf = "sincyc.m";
+function cycsin()
+	srcf = "cycsin.m";
 	source(srcf);
 	i = 0;
 	names{++i} = "cyc83()";
@@ -17,7 +17,6 @@ function cyc83()
 	##
 	## Usage:
 	##   cyc83()
-	##
 	rtp = input("Safety level: ");
 	rfp = input("Hole start level: ");
 	sdis = input("Safety dis from start level (w/o sign): ");
@@ -62,7 +61,6 @@ function cyc840()
 	##
 	## Usage:
 	##   cyc840()
-	##
 	rtp = input("Safety level: ");
 	rfp = input("Hole start level: ");
 	sdis = input("Safety dis from start level (w/o sign): ");

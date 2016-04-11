@@ -4,6 +4,6 @@ mass()
 sizes()
 facets()
 thread()
-sincyc()
-circ_anal()
+cycsin()
+circ()
 
