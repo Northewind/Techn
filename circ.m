@@ -24,35 +24,20 @@ function R = cradByPnts(P)
 	## Inputs:
 	##   P - матрица n*2 из координат (x,y) для n точек (n>=3).
 	##
-
 	if ((n=size(P,1)) < 3 || size(P,2) != 2)
 		error("Incorrect arguments");
 	endif
-
-	# Normal lines
-	for i = 1 : n-1
-		x1 = P(i,1);
-		x2 = P(i+1,1);
-		y1 = P(i,2);
-		y2 = P(i+1,2);
-		k = (y2 - y1)/(x2 - x1);
-		lines(i).k = -1/k;
-		lines(i).pnt(1) = (x1 + x2)/2;
-		lines(i).pnt(2) = (y1 + y2)/2;
-	endfor
-
-	# Radius
-	for i = 1 : length(lines)-1
-		for j = i+1 : length(lines)
-			C = clineint(lines(i), lines(j));
-			r(j-i) = norm(P(i,:) - C);
+	R = [];
+	for i = 1 : size(P,1)-2
+		for j = i+1 : size(P,1)-1
+			for k = j+1 : size(P,1)
+				r = cradius3p(P(i,:),P(j,:),P(k,:));
+				printf("rad: %.3f (used points: %d-%d-%d)\n",r,i,j,k);
+				R(end+1) = r;
+			endfor
 		endfor
-		Rmin(i) = min(r);
-		Rmax(i) = max(r);
-		r = [];
 	endfor
-
-	R = [min(Rmin) max(Rmax)];
+	R = [min(R) max(R)];
 endfunction
 
 
