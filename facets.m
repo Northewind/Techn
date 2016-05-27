@@ -2,8 +2,8 @@ function facets()
 	srcf = "facets.m";
 	source(srcf);
 	i = 0;
-	names{++i} = "fcirc(Dmill, Dpre, L, angle, Zmin=NA)";
-	names{++i} = "fproc(f, m, Zmin=NA)";
+	names{++i} = "fcirc(Dmill, Dpre, L, angle, Zmax=NA)";
+	names{++i} = "fproc(f, m, Zmax=NA)";
 	names{++i} = "fcreate(L, angle)";
 	names{++i} = "fmill(D0, D1, angle)";
 	printf("Functions in file %s:\n", srcf);
@@ -13,19 +13,22 @@ function facets()
 end
 
 
-function res = fcirc(Dmill, Dpre, L, angle, Zmin=NA)
+function res = fcirc(Dmill, Dpre, L, ang, Zmax=NA)
 	## CNC code for facet processing in the circular hole.
 	##
 	## Usage:
-	##     fcnc(Dmill, Dpre, L, angle, Zmin=NA)
+	##     fcnc(Dmill, Dpre, L, ang, Zmax=NA)
 	##
 	## Inputs:
 	##     Dmill - 2-vector - min and max diameters of the mill
 	##     Dpre  - diameter of predrilled hole
+	##     L     - facet length (in Z axis)
+	##     ang   - angle of facet
+	##     Zmax  - maximum offcet in Z
 	##     
-	f = fcreate(L, angle);
-	m = fmill(Dmill(1), Dmill(2), angle);
-	[Z dx] = fproc(f, m, Zmin);
+	f = fcreate(L, ang);
+	m = fmill(Dmill(1), Dmill(2), ang);
+	[Z dx] = fproc(f, m, Zmax);
 	dx = Dpre/2 - dx;
 	res = sprintf("\n\
 G0 Z...\n\
@@ -38,12 +41,12 @@ Z, dx, -dx, -dx);
 endfunction
 
 
-function [Z, d] = fproc(f, m, Zmin=NA)
+function [Z, d] = fproc(f, m, Zmax=NA)
 	## Расчёт смещения по Z фасочной фрезы от верхней плоскости,
 	##   а также смещения d центра фрезы от стенки
 	##
 	## Usage:
-	##   [Z, d] = facetProc(f,m[,Zmin])
+	##   [Z, d] = facetProc(f, m, Zmax=NA)
 	##
 	## Returns:
 	##   Z - plane offset by Z axis
@@ -52,16 +55,16 @@ function [Z, d] = fproc(f, m, Zmin=NA)
 	## Inputs:
 	##   f - фаска, созданная createFacet()
 	##   m - фреза, созданная createMill()
-	##   Zmin - минимальное предельное смещение по Z,
+	##   Zmax - минимальное предельное смещение по Z,
 	##     ниже которого опускаться нельзя
 	if ((f.L > m.L) || (f.ang ~= m.ang))
 		error("facetProc: mill is not applicable");
 	end
 	Z = - f.L/2 - m.L/2;
 	d = -f.B/2 + mean(m.D)/2;
-	# Проверка по Zmin
-	if (~isna(Zmin) && (Z < Zmin))
-		dz = Zmin - Z;
+	# Проверка по Zmax
+	if (~isna(Zmax) && (Z < Zmax))
+		dz = Zmax - Z;
 		d -= tand(f.ang)*dz;
 		if (d < 0)
 			error("facetProc: wrong geometry")

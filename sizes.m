@@ -2,7 +2,7 @@ function sizes()
 	srcf = "sizes.m";
 	source(srcf);
 	i = 0;
-	names{++i} = "sdev2lim(varargin)";
+	names{++i} = "slim(varargin)";
 	names{++i} = "splus(varargin)";
 	names{++i} = "stol(s)";
 	printf("Functions in file %s:\n", srcf);
@@ -11,12 +11,12 @@ function sizes()
 	end
 end
 
-function s_res = sdev2lim(varargin)
+function s_res = slim(varargin)
 	## Convert arguments to 2-vector of limiting sizes
 	##
 	## Usage:
-	##     sdev2lim([nom dev1 dev2=0])
-	##     sdev2lim(nom, dev1, dev2=0)
+	##     slim([nom dev1 dev2=0])
+	##     slim(nom, dev1, dev2=0)
 	if (nargin == 1 && length(varargin{1}) == 2)
 		devs = [varargin{1}(2), 0];
 		nom = varargin{1}(1);
@@ -30,7 +30,7 @@ function s_res = sdev2lim(varargin)
 		devs = [varargin{2}, varargin{3}];
 		nom = varargin{1};
 	else
-		error("dev2lim");
+		error("slim");
 	end;
 	low = min(devs);
 	upp = max(devs);

@@ -49,8 +49,8 @@ function cyc83()
 	vari = uint32(menu("Drilling mode:",
 			"chip break",
 			"chip evacuation"));
-	printf("CYCLE83(%g,%g,%g,%g,%g,%g, %g,%g,%g,%g,%g,%d)\n",
-		rtp, rfp, sdis, dp, dpr, fdep,
+	printf("CYCLE83(%g,%g,%g,%g,%g,%g, %g,%g,%g,%g,%g,%d)\n",...
+		rtp, rfp, sdis, dp, dpr, fdep,...
 		fdpr, dam, dtb, dts, frf, vari);
 end
 
