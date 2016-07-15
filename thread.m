@@ -3,6 +3,7 @@ function thread()
 	source(srcf);
 	i = 0;
 	names{++i} = "mpitch(d)";
+	names{++i} = "grv_wdth(D, D2, p, ang)";
 	printf("Functions in file %s:\n", srcf);
 	for k = 1 : i
 		printf("\t%s\n", names{k});
@@ -76,5 +77,21 @@ function [p] = mpitch(d)
 	if (isfield(pitchs, num2str(d)))
 		p = getfield(pitchs, num2str(d));
 	endif
+endfunction
+
+
+function w = grv_wdth(D, D2, p, ang)
+## Calculate groove width (onto major diameter) for trapezoidal threads.
+##
+## Usage:
+##     w = grv_wdth(D, D2, p, ang)
+##
+## Parameters:
+##     D       major diameter
+##     D2      pitch diameter
+##     p       thread pitch
+##     ang     angle of thread profile
+##
+	w = p/2 - (D-D2)*tand(ang/2);
 endfunction
 
