@@ -3,6 +3,7 @@ function thread()
 	source(srcf);
 	i = 0;
 	names{++i} = "mpitch(d)";
+	names{++i} = "grv_wdth(D, D2, p, ang)";
 	printf("Functions in file %s:\n", srcf);
 	for k = 1 : i
 		printf("\t%s\n", names{k});
@@ -76,5 +77,15 @@ function [p] = mpitch(d)
 	if (isfield(pitchs, num2str(d)))
 		p = getfield(pitchs, num2str(d));
 	endif
+endfunction
+
+
+function w = grv_wdth(D, D2, p, ang)
+## Calculate groove width
+##
+## Usage:
+##     w = grv_wdth(D, D2, p, ang)
+##
+	w = p/2 - (D-D2)*tand(ang/2);
 endfunction
 
