@@ -80,11 +80,11 @@ function [p] = mpitch(d)
 endfunction
 
 
-function w = grv_wdth(D, D2, p, ang)
+function W = grv_wdth(D, D2, p, ang)
 ## Calculate groove width (onto major diameter) for trapezoidal threads.
 ##
 ## Usage:
-##     w = grv_wdth(D, D2, p, ang)
+##     W = grv_wdth(D, D2, p, ang)
 ##
 ## Parameters:
 ##     D       major diameter
@@ -92,6 +92,6 @@ function w = grv_wdth(D, D2, p, ang)
 ##     p       thread pitch
 ##     ang     angle of thread profile
 ##
-	w = p/2 - (D-D2)*tand(ang/2);
+	W = p/2 - (D-D2)*tand(ang/2);
 endfunction
 
