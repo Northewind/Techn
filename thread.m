@@ -8,18 +8,17 @@ function thread()
 	for k = 1 : i
 		printf("\t%s\n", names{k});
 	end
-endfunction
+end
 
 
 function [p] = mpitch(d)
-## Get pitchs for metric thread
-##
-## Usage:
-##   mpitch(d)
-##
-## Parameters:
-##   d    thread diameter
-##
+%% Get pitchs for metric thread
+%%
+%% Usage:
+%%     mpitch(d)
+%%
+%% Inputs:
+%%     d    thread diameter
 	pitchs = struct(
 		"0.25", [0.075],
 		"0.3",  [0.08],
@@ -72,26 +71,24 @@ function [p] = mpitch(d)
 		"60",   [5.5],
 		"64",   [6],
 		"68",   [6]);
-
 	p = [];
 	if (isfield(pitchs, num2str(d)))
 		p = getfield(pitchs, num2str(d));
-	endif
-endfunction
+	end
+end
 
 
 function W = grv_wdth(p, D, D2, ang)
-## Calculate groove width (onto major diameter) for trapezoidal threads.
-##
-## Usage:
-##     W = grv_wdth(p, D, D2, ang)
-##
-## Parameters:
-##     p       thread pitch
-##     D       major diameter
-##     D2      pitch diameter
-##     ang     angle of thread profile
-##
+	%% Calculate groove width (onto major diameter) for trapezoidal threads.
+	%%
+	%% Usage:
+	%%     W = grv_wdth(p, D, D2, ang)
+	%%
+	%% Inputs:
+	%%     p       thread pitch
+	%%     D       major diameter
+	%%     D2      pitch diameter
+	%%     ang     angle of thread profile
 	W = p/2 - (D-D2)*tand(ang/2);
-endfunction
+end
 

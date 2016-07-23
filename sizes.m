@@ -11,12 +11,13 @@ function sizes()
 	end
 end
 
+
 function s_res = slim(varargin)
-	## Convert arguments to 2-vector of limiting sizes
-	##
-	## Usage:
-	##     slim([nom dev1 dev2=0])
-	##     slim(nom, dev1, dev2=0)
+	%% Convert arguments to 2-vector of limiting sizes
+	%%
+	%% Usage:
+	%%     slim([nom dev1 dev2=0])
+	%%     slim(nom, dev1, dev2=0)
 	if (nargin == 1 && length(varargin{1}) == 2)
 		devs = [varargin{1}(2), 0];
 		nom = varargin{1}(1);
@@ -36,10 +37,11 @@ function s_res = slim(varargin)
 	upp = max(devs);
 	s_res(1) = nom + low;
 	s_res(2) = nom + upp;
-end;
+end
+
 
 function s = splus(varargin)
-	## Sum of sizes
+	%% Sum of sizes
 	lowLim = min(varargin{1});
 	uppLim = max(varargin{1});
 	for i = 2 : length(varargin)
@@ -49,7 +51,9 @@ function s = splus(varargin)
 	s = [lowLim uppLim];
 end
 
+
 function t = stol(s)
-	## Calculate tolerance of the size s
+	%% Calculate tolerance of the size s
 	t = max(s) - min(s);
 end
+

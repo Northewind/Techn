@@ -12,11 +12,11 @@ end
 
 
 function cyc83()
-	## Sinumerik CYCLE83 cycle - interactive CNC-block generation
-	##   for deep drilling
-	##
-	## Usage:
-	##   cyc83()
+	%% Sinumerik CYCLE83 cycle - interactive CNC-block generation
+	%%   for deep drilling
+	%%
+	%% Usage:
+	%%     cyc83()
 	rtp = input("Safety level: ");
 	rfp = input("Hole start level: ");
 	sdis = input("Safety dis from start level (w/o sign): ");
@@ -56,11 +56,10 @@ end
 
 
 function cyc840()
-	## Sinumerik CYCLE840 cycle - interactive CNC-block generation
-	##   for tapping
-	##
-	## Usage:
-	##   cyc840()
+	%% Sinumerik CYCLE840 cycle - interactive CNC-block generation for tapping
+	%%
+	%% Usage:
+	%%     cyc840()
 	rtp = input("Safety level: ");
 	rfp = input("Hole start level: ");
 	sdis = input("Safety dis from start level (w/o sign): ");

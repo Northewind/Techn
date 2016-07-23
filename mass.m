@@ -2,8 +2,8 @@ function mass()
 	srcf = "mass.m";
 	source(srcf);
 	i = 0;
-	names{++i} = "mcyl(L, varargin)";
-	names{++i} = "mbox(L,W,H)";
+	names{++i} = "mcyl(l, D)";
+	names{++i} = "mbox(l, w, h)";
 	printf("Functions in file %s:\n", srcf);
 	for k = 1 : i
 		printf("\t%s\n", names{k});
@@ -11,39 +11,34 @@ function mass()
 end
 
 
-function m = mcyl(L, varargin)
+function m = mcyl(l, varargin)
 	%% Calculate mass of steel cylinder
 	%%
 	%% Usage:
-	%%     m = mcyl(L, D)
-	%%     m = mcyl(L, [D d])
-	%%
-	ro = 7.85e-6;		# kg/mm3
+	%%     m = mcyl(l, d)
+	%%     m = mcyl(l, [D d])
+	%%     m = mbox(l, w, h)
 	if (nargin == 2 && isscalar(varargin{1}))
-		D1 = varargin{1};
-		D2 = 0;
+		d1 = varargin{1};
+		d2 = 0;
 	elseif (nargin == 2 && isvector(varargin{1}))
-		D1 = varargin{1}(1);
-		D2 = varargin{1}(2);
+		d1 = varargin{1}(1);
+		d2 = varargin{1}(2);
 	elseif (nargin == 3)
-		D1 = varargin{1};
-		D2 = varargin{2};
+		d1 = varargin{1};
+		d2 = varargin{2};
 	else
-		error("mass: unknown data type");
+		error("mass: invalid args.");
 	end
-	Dmin = min(D1, D2);
-	Dmax = max(D1, D2);
-	m = pi/4 * (Dmax^2 - Dmin^2) * L * ro;
+	m = pi/4 * abs(d1^2 - d2^2) * l * 7.85e-6;
 end
 
 
-function m = mbox(L,W,H)
+function m = mbox(l, w, h)
 	%% Calculate mass of steel box LxWxH
 	%%
 	%% Usage:
-	%%     m = mbox(L,W,H)
-	%%
-	ro = 7.85e-6;  # kg/mm3
-	m = L * W * H * ro;
+	%%     m = mbox(l, w, h)
+	m = l * w * h * 7.85e-6;
 end
 

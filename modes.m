@@ -29,7 +29,6 @@ function S = Scut(Ra, r, Smax=NA)
 	%%
 	%% Usage:
 	%%     S = Scut(Ra, r, Smax=NA)
-	%%
 	S = 0.14 * sqrt(Ra .* r);	
 	if (~isna(Smax))
 		S = min(S, Smax);
@@ -42,7 +41,6 @@ function f = ScutDrill(D, Smax=NA)
 	%%
 	%% Usage:
 	%%     f = ScutDrill(D, Smax=NA)
-	%%
 	f = 0.015 * D;
 	if (~isna(Smax))
 		f = min(S, Smax);
@@ -55,7 +53,6 @@ function v = Vcut(D, n, n_max=NA)
 	%%
 	%% Usage:
 	%%     v = Vcut(D, n, n_max=NA)
-	%%
 	if (~isna(n_max))
 		n = (n <= n_max).*n  +  (n > n_max).*n_max;
 	end
@@ -71,7 +68,6 @@ function n = ncut(D, V, n_max=NA)
 	%%
 	%% Usage:
 	%%     n = ncut(D, V, n_max=NA)
-	%%
 	n = 1000 * V / pi ./ D;
 	if (~isna(n_max))
 		n = min(n,  n_max);
@@ -84,7 +80,6 @@ function f = Sm(D, S, n_max, V)
 	%%
 	%% Usage:
 	%%     f = Sm(D, S, n_max, V)
-	%%
 	f = S * ncut(D,V,n_max);
 end
 
@@ -94,7 +89,6 @@ function D = Dcut(V, n, n_max=NA)
 	%%
 	%% Usage:
 	%%     D = Dcut(V, n, n_max=NA)
-	%%
 	if (~isna(n_max))
 		n = (n <= n_max).*n  +  (n > n_max).*n_max
 	end
@@ -111,13 +105,12 @@ function L = Lstruc(mainPath, D, pre, pst, jmp);
 	%% Usage:
 	%%     L = Lstruc(mainPath, D, pre, pst, jmp)
 	%%
-	%% Arguments:
-	%%     mainPath - длина основного хода
-	%%     D        - вектор с координатами [Dfrom Dto]
-	%%     pre      - недобег
-	%%     pst      - перебег
-	%%     jmp      - отскок
-	%%
+	%% Inputs:
+	%%     mainPath    длина основного хода
+	%%     D           вектор с координатами [Dfrom Dto]
+	%%     pre         недобег
+	%%     pst         перебег
+	%%     jmp         отскок
 	L.main = mainPath;
 	L.D0 = min(D);
 	L.D1 = max(D);
@@ -132,7 +125,6 @@ function time = longT(D, L, i, S, n_max, V)
 	%%
 	%% Usage:
 	%%     time = longT(D, L, i, S, n_max, V)
-	%%
 	if (ismatrix(D))
 		if (numel(D) == 2)
 			D = idiams(D,i);
@@ -150,14 +142,12 @@ function time = crossT(D, i, S, n_max, V)
 	%%
 	%% Usage:
 	%%     time = crossT(D, i, S, n_max, V)
-	%%
-	%% Arguments:
-	%%     D     - вектор с координатами [Dfrom Dto]
-	%%     i     - число проходов
-	%%     S     - подача, мм/об
-	%%     n_max - максимальная частота вращения шпинделя, об/мин
-	%%     V     - скорость резания, м/мин
-	%%
+	%% Inputs:
+	%%     D        вектор с координатами [Dfrom Dto]
+	%%     i        число проходов
+	%%     S        подача, мм/об
+	%%     n_max    максимальная частота вращения шпинделя, об/мин
+	%%     V        скорость резания, м/мин
 	% Вывод формулы:
 	%  n(D)  = 1000 * V / pi / D
 	%  Sm(D) = n(D) * S
@@ -176,11 +166,10 @@ function time = longTfast(L, i, Ss)
 	%% Usage:
 	%%    time = longTfast(L, i, Ss) 
 	%%
-	%% Arguments:
-	%%    L  - структура пути (см. Lstruc)
-	%%    i  - число проходов
-	%%    Ss - скорость быстрых перемещений, мм/мин
-	%%
+	%% Inputs:
+	%%    L     структура пути (см. Lstruc)
+	%%    i     число проходов
+	%%    Ss    скорость быстрых перемещений, мм/мин
 	time = lngth(L, i) / Ss;
 end
 
@@ -191,11 +180,10 @@ function time = crossTfast(L, i, Ss)
 	%% Usage:
 	%%     time = crossTfast(L, i, Ss)
 	%%
-	%% Arguments:
-	%%     L  - структура пути (см. Lstruc)
-	%%     i  - число проходов
-	%%     Ss - скорость быстрых перемещений, мм/мин
-	%%
+	%% Inputs:
+	%%     L     структура пути (см. Lstruc)
+	%%     i     число проходов
+	%%     Ss    скорость быстрых перемещений, мм/мин
 	dmax = max(L.D0, L.D1) + 2*L.pre;
 	dmin = min(L.D0, L.D1) - 2*L.pst;
 	Lw = (dmax - dmin)/2 * i + 2*L.jmp;
@@ -210,12 +198,11 @@ function p = lngth(L, i)
 	%%     p = lngth(L, i)
 	%%
 	%% Returns:
-	%%     L - структура / вектор, содержащая поля:
-	%%         pre  - недобег
-	%% 	       main - длина рабочего хода
-	%%         pst  - перебег
-	%%         jmp  - отскок
-	%%
+	%%     L    структура / вектор, содержащая поля:
+	%%          pre  - недобег
+	%% 	        main - длина рабочего хода
+	%%          pst  - перебег
+	%%          jmp  - отскок
 	if (isa(L, "numeric"))
 		p = L;
 	elseif (isstruct(L))
@@ -244,10 +231,9 @@ function Ds = tdiams(D, t)
 	%% Usage:
 	%%     Ds = tdiams(D, t)
 	%%
-	%% Arguments:
-	%%     D - вектор с координатами [Dfrom Dto]
-	%%     t - глубина точения
-	%%
+	%% Inputs:
+	%%     D    вектор с координатами [Dfrom Dto]
+	%%     t    глубина точения
 	Ds = [max(D) : -2*t : min(D)];
 end
 
@@ -258,10 +244,9 @@ function Ds = idiams(D, i)
 	%% Usage:
 	%%     Ds = idiams(D, i)
 	%%
-	%% Arguments:
-	%%     D - вектор с координатами [Dfrom Dto]
-	%%     i - число проходов
-	%%
+	%% Inputs:
+	%%     D    вектор с координатами [Dfrom Dto]
+	%%     i    число проходов
 	Ds = linspace(max(D), min(D), i);
 end
 
@@ -272,10 +257,9 @@ function t = tmax(insertType, insertLength)
 	%% Usage:
 	%%     t = tmax(insertType, insertLength)
 	%%
-	%% Arguments:
-	%%     insertType   - тип пластины - символ из V,D,K,T,W,C,S.
-	%%     insertLength - типоразмер пластины (длина кромки)
-	%%
+	%% Inputs:
+	%%     insertType      тип пластины - символ из V,D,K,T,W,C,S.
+	%%     insertLength    типоразмер пластины (длина кромки)
 	if (~ischar(insertType) || ~isnumeric(insertLength))
 		error("tmax: invalid data type");
 	end
