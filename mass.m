@@ -17,7 +17,6 @@ function m = mcyl(l, varargin)
 	%% Usage:
 	%%     m = mcyl(l, d)
 	%%     m = mcyl(l, [D d])
-	%%     m = mbox(l, w, h)
 	if (nargin == 2 && isscalar(varargin{1}))
 		d1 = varargin{1};
 		d2 = 0;
