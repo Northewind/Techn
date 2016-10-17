@@ -17,6 +17,7 @@ function modes()
 	names{++i} = "tdiams(D, t)";
 	names{++i} = "idiams(D, i)";
 	names{++i} = "tmax(insertType, insertLength)";
+	names{++i} = "incorn_millfeed(Freq, Dmill, Rcorn)";
 	printf("Functions in file %s:\n", srcf);
 	for k = 1 : i
 		printf("\t%s\n", names{k});
@@ -197,12 +198,13 @@ function p = lngth(L, i)
 	%% Usage:
 	%%     p = lngth(L, i)
 	%%
-	%% Returns:
+	%% Inputs:
 	%%     L    структура / вектор, содержащая поля:
 	%%          pre  - недобег
 	%% 	        main - длина рабочего хода
 	%%          pst  - перебег
 	%%          jmp  - отскок
+	%%     i    number of passes
 	if (isa(L, "numeric"))
 		p = L;
 	elseif (isstruct(L))
@@ -278,5 +280,19 @@ function t = tmax(insertType, insertLength)
 			error("tmax: unknown insert type");
 	end
 	t = k * insertLength;
+end
+
+
+function F = incorn_millfeed(Freq, Dmill, Rcorn)
+	%% Calculate programmable feed in inner radial corner while milling.
+	%%
+	%% Usage:
+	%%     F = incorn_millfeed(Freq, Dmill, Rcorn)
+	%%
+	%% Inputs:
+	%%     Freq            required feed at mill perifery.
+	%%     Dmill           mill diameter
+	%%     Rcorn           inner corner radius
+	F = (Rcorn - Dmill/2) / Rcorn * Freq;
 end
 
