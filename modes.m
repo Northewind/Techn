@@ -55,9 +55,11 @@ function v = Vcut(D, n, n_max=NA)
 	%% Usage:
 	%%     v = Vcut(D, n, n_max=NA)
 	if (~isna(n_max))
-		n = (n <= n_max).*n  +  (n > n_max).*n_max;
+		if (n > n_max)
+			n = n_max;
+		end
 	end
-	if (numel(D) ~= numel(n))
+	if (numel(n) > 1)
 		D = mean(D);
 	end
 	v = pi*D.*n / 1000;
