@@ -4,6 +4,7 @@ function cycsin()
 	i = 0;
 	names{++i} = "cyc83()";
 	names{++i} = "cyc840()";
+	names{++i} = "holes2()";
 	printf("Functions in file %s:\n", srcf);
 	for k = 1 : i
 		printf("\t%s\n", names{k});
@@ -17,6 +18,7 @@ function cyc83()
 	%%
 	%% Usage:
 	%%     cyc83()
+
 	rtp = input("Safety level: ");
 	rfp = input("Hole start level: ");
 	sdis = input("Safety dis from start level (w/o sign): ");
@@ -49,6 +51,7 @@ function cyc83()
 	vari = uint32(menu("Drilling mode:",
 			"chip break",
 			"chip evacuation"));
+
 	printf("CYCLE83(%g,%g,%g,%g,%g,%g, %g,%g,%g,%g,%g,%d)\n",...
 		rtp, rfp, sdis, dp, dpr, fdep,...
 		fdpr, dam, dtb, dts, frf, vari);
@@ -60,6 +63,7 @@ function cyc840()
 	%%
 	%% Usage:
 	%%     cyc840()
+
 	rtp = input("Safety level: ");
 	rfp = input("Hole start level: ");
 	sdis = input("Safety dis from start level (w/o sign): ");
@@ -83,5 +87,23 @@ function cyc840()
 	printf("CYCLE840(%g,%g,%g,%g,%g,%g,%d,%d,%d,%g,%g)\n",
 		rtp, rfp, sdis, dp, dpr, dtb,
 		sdr, sdac, enc, mpit, pit);
+end
+
+
+function holes2()
+	%% Sinumerik HOLES2 macro - interactive CNC-block generation for hole processing at a circle line.
+	%%
+	%% Usage:
+	%%     holes2()
+
+	cpa  = input("Circle center X: ");
+	cpo  = input("Circle center Y: ");
+	rad  = input("Radius of circle: ");
+	sta1 = input("Start angle, deg.: ");
+	inda = input("Step by angle (<0 - CLW, >0 - CCLW), deg.: ");
+	n    = input("Number of holes: ");
+
+	printf("HOLES2(%g,%g,%g,%g,%g,%d)\n",
+		cpa, cpo, rad, sta1, inda, n);
 end
 
