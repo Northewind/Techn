@@ -3,6 +3,7 @@ function modes()
 	source(srcf);
 	i = 0;
 	names{++i} = "Scut(Ra, r, Smax=NA)";
+	names{++i} = "ScutMill(Rmax, r, Smax=NA)";
 	names{++i} = "ScutDrill(D, Smax=NA)";
 	names{++i} = "Vcut(D, n, n_max=NA)";
 	names{++i} = "ncut(D, V, n_max=NA)";
@@ -26,7 +27,7 @@ end
 
 
 function S = Scut(Ra, r, Smax=NA)
-	%% Вычисление чистовой подачи (по шероховатости)
+	%% Вычисление чистовой подачи при точении (по шероховатости)
 	%%
 	%% Usage:
 	%%     S = Scut(Ra, r, Smax=NA)
@@ -37,14 +38,26 @@ function S = Scut(Ra, r, Smax=NA)
 end
 
 
-function f = ScutDrill(D, Smax=NA)
+function S = ScutMill(Rmax, r, Smax=NA)
+	%% Вычисление подачи при фрезеровании радиусом инструмента
+	%%
+	%% Usage:
+	%%     S = ScutMill(Rmax, r, Smax=NA)
+	S = 2*sqrt(r^2 - (r - Rmax/1000)^2);
+	if (~isna(Smax))
+		S = min(S, Smax);
+	end
+end
+
+
+function S = ScutDrill(D, Smax=NA)
 	%% Вычисление подачи при сверлении монолитным тв/сплавным сверлом D
 	%%
 	%% Usage:
-	%%     f = ScutDrill(D, Smax=NA)
-	f = 0.015 * D;
+	%%     S = ScutDrill(D, Smax=NA)
+	S = 0.015 * D;
 	if (~isna(Smax))
-		f = min(S, Smax);
+		S = min(S, Smax);
 	end
 end
 
